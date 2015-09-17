@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yxl.demo.restful.dao.DemoDAO">
+    <resultMap type="DemoDO" id="DemoResult">
+        <result column="id" property="id"/>
+        <result column="gmt_created" property="gmtCreated"/>
+        <result column="gmt_creator" property="gmtCreator"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="gmt_modifier" property="gmtModifier"/>
+    </resultMap>
+
+    <sql id="DemoDO_AllColumn">
+        id ,
+        gmt_created ,
+        gmt_creator ,
+        gmt_modified ,
+        gmt_modifier
+    </sql>
+
+    <insert id="insert" parameterType="DemoDO" useGeneratedKeys="true" keyProperty="id" statementType="PREPARED">
+        INSERT INTO demo_table
+        (
+        gmt_created ,
+        gmt_creator ,
+        gmt_modified ,
+        gmt_modifier
+        )
+        VALUES
+        (
+        now(),
+        #{gmtCreator},
+        now(),
+        #{gmtModifier}
+        )
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID() AS id from dual
+        </selectKey>
+    </insert>
+
+    <select id="selectObjList" parameterType="java.util.Map" resultMap="DemoResult">
+        select
+        <include refid="DemoDO_AllColumn"/>
+        from demo_table
+        <if test="gmtCreator != null and gmtCreator !='' ">
+            and gmt_creator = #{gmtCreator}
+        </if>
+    </select>
+
+    <update id="updateObj" parameterType="DemoDO">
+        update demo_table set
+        gmt_modified = now()
+        where id=#{id}
+    </update>
+</mapper>

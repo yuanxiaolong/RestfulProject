@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans classpath:/org/springframework/beans/factory/xml/spring-beans-3.1.xsd">
+    <!-- garen -->
+    <bean id="demoDataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="initialSize" value="100"/>
+        <property name="maxActive" value="1000"/>
+        <property name="maxIdle" value="50"/>
+        <property name="password" value="${db.demo.password}"/>
+        <property name="username" value="${db.demo.username}"/>
+        <property name="url" value="${db.demo.url}"/>
+        <property name="validationQuery" value="select 'demo' from dual"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="removeAbandoned" value="true"/>
+    </bean>
+
+    <!-- garen sql session factory -->
+    <bean id="demoSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="demoDataSource"/>
+        <property name="configLocation" value="classpath:mybatis/config/mybatis-config.xml"/>
+    </bean>
+
+    <bean id="demoDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionFactory" ref="demoSqlSessionFactory"/>
+        <property name="mapperInterface" value="com.yxl.demo.restful.dao.DemoDAO">
+        </property>
+    </bean>
+
+
+</beans>
