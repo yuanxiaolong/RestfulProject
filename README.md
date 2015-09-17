@@ -18,8 +18,8 @@
 
 ## run
 
-* 开发环境 ：``` java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -jar garen-0.0.1-SNAPSHOT.jar ```
-* 生产环境 : ``` nohup java -jar garen-0.0.1-SNAPSHOT.jar >> garenRun.log 2>&1 & ```
+* 开发环境 ：``` java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n -jar restful-0.0.1-SNAPSHOT.jar ```
+* 生产环境 : ``` nohup java -jar restful-0.0.1-SNAPSHOT.jar >> restfulRun.log 2>&1 & ```
 
 
 
